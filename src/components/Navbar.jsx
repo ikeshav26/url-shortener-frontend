@@ -1,16 +1,16 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import AuthProvider, {useAuth}  from '../context/AuthProvider'
+import AuthProvider, { useAuth } from '../context/AuthProvider'
 import toast from 'react-hot-toast'
 
 const Navbar = () => {
-  const {authuser, setauthuser} = useAuth();
+  const { authuser, setauthuser } = useAuth();
+  const navigate=useNavigate()
 
   const logoutHandler = (e) => {
     localStorage.removeItem('user');
     setauthuser(null); // Clear auth state
     toast.success("Logout Successfully")
-
   }
 
   return (
@@ -32,14 +32,38 @@ const Navbar = () => {
           >
             CustomUrl
           </Link>
-          {authuser ? (
-            <button
-              onClick={logoutHandler}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-medium"
-            >
-              Logout
-            </button>
-          ) : (
+          {authuser && (
+            <Link to='/allUrls'>
+            <div className="flex items-center gap-2">
+              {/* Profile Icon */}
+              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                <svg
+                  className="w-6 h-6 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z"
+                  />
+                  <circle cx="12" cy="11" r="4" />
+                </svg>
+              </div>
+              <Link to='/'>
+              <button
+                onClick={logoutHandler}
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-medium"
+              >
+                Logout
+              </button>
+              </Link>
+            </div>
+            </Link>
+          )}
+          {!authuser && (
             <Link
               to="/login"
               className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-medium"

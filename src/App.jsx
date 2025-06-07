@@ -7,6 +7,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import CustomUrl from './pages/CustomUrl'
 import AuthProvider, { useAuth } from './context/AuthProvider'
+import AllUrls from './pages/AllUrls'
 
 const App = () => {
   const {authuser, setauthuser} = useAuth();
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/' element={<Homepage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/allUrls' element={<AllUrls />} />
         <Route path='/customUrl' element={authuser? <CustomUrl/>:<Navigate to="/"/>}/>
       </Routes>
       <Toaster/>
