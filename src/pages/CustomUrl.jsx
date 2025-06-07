@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { Link } from 'react-router'
 
 const CustomUrl = () => {
   const [url, seturl] = useState("");
@@ -73,14 +72,14 @@ const CustomUrl = () => {
           {shortened && (
             <div className="mt-4 text-center">
               <span className="text-green-700">Short URL: </span>
-              <Link
+              <a
                 href={shortened}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline break-all"
               >
                 {shortened}
-              </Link>
+              </a>
             </div>
           )}
         </form>
