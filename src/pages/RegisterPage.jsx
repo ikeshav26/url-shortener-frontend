@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthProvider'; // Assuming you have a context or state management for auth
 
 const RegisterPage = () => {
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
+    const {authuser, setauthuser} = useAuth(); // Assuming you have a context or state management for auth
 
     const navigate = useNavigate();
 
@@ -19,7 +21,8 @@ const RegisterPage = () => {
         };
         try {
             const res = await axios.post("http://localhost:5001/api/auth/register", form);
-            localStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+            setauthuser(res.data.user)
             toast.success("Registration successful");
             navigate('/');
 

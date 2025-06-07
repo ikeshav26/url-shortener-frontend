@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthProvider, {useAuth}  from '../context/AuthProvider'
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
   const {authuser, setauthuser} = useAuth();
@@ -8,6 +9,7 @@ const Navbar = () => {
   const logoutHandler = (e) => {
     localStorage.removeItem('user');
     setauthuser(null); // Clear auth state
+    toast.success("Logout Successfully")
 
   }
 
