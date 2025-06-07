@@ -2,13 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthProvider'; // Assuming you have a context or state management for auth
+import { useAuth } from '../context/AuthProvider';
 
 const RegisterPage = () => {
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
-    const {authuser, setauthuser} = useAuth(); // Assuming you have a context or state management for auth
+    const { authuser, setauthuser } = useAuth();
 
     const navigate = useNavigate();
 
@@ -19,17 +19,27 @@ const RegisterPage = () => {
             email,
             password
         };
-        try {
-            const res = await axios.post("http://localhost:5001/api/auth/register", form);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-            setauthuser(res.data.user)
-            toast.success("Registration successful");
-            navigate('/');
 
+        try {
+            if (!name || !email || !password) {
+                toast.error("Please fill all fields");
+            }
+            else {
+                const res = await axios.post("http://localhost:5001/api/auth/register", form,{withCredentials:true});
+                localStorage.setItem("user", JSON.stringify(res.data.user));
+                setauthuser(res.data.user)
+                toast.success("Registration successful");
+                navigate('/');
+
+                setname("");
+                setemail("");
+                setpassword("");
+            }
+        } catch (err) {
+            toast.error("Registration failed. Please check your details.");
             setname("");
             setemail("");
             setpassword("");
-        } catch (err) {
             console.error(err);
         }
     };
@@ -50,6 +60,7 @@ const RegisterPage = () => {
                     <div className="mb-4">
                         <input
                             value={name}
+                            required
                             onChange={(e) => setname(e.target.value)}
                             name="name"
                             type="text"
@@ -59,6 +70,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-4">
                         <input
+                            required
                             value={email}
                             onChange={(e) => setemail(e.target.value)}
                             name="email"
@@ -69,6 +81,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-6">
                         <input
+                            required
                             onChange={(e) => setpassword(e.target.value)}
                             value={password}
                             name="password"
@@ -84,6 +97,10 @@ const RegisterPage = () => {
                         Register
                     </button>
                 </form>
+                <div className="mt-4 text-center">
+                    <span>Already have an account? </span>
+                    <Link to="/login" className="text-blue-600 underline">Login</Link>
+                </div>
             </div>
         </div>
     );

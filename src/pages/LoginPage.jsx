@@ -18,14 +18,21 @@ const Loginpage = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5001/api/auth/login", form)
+      const res = await axios.post("http://localhost:5001/api/auth/login", form,{withCredentials:true})
       if (res.status === 200) {
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setauthuser(res.data.user)
+        setemail("");
+        setpassword("");
+
         navigate('/');
          toast.success("Login successful");
       }
     } catch (err) {
+      toast.error("Login failed. Please check your credentials.");
+      setemail("")
+      setpassword("")
+      
       console.error(err);
     }
   }
@@ -45,6 +52,7 @@ const Loginpage = () => {
         <form onSubmit={submitHandler}>
           <div className="mb-4">
             <input
+            required
               value={email}
               onChange={(e) => setemail(e.target.value)}
               name="email"
@@ -55,6 +63,7 @@ const Loginpage = () => {
           </div>
           <div className="mb-6">
             <input
+            required
               value={password}
               onChange={(e) => setpassword(e.target.value)}
               name="password"
