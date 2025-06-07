@@ -24,6 +24,8 @@ const CustomUrl = () => {
       );
       setShortened(res.data); // Show the short URL
       toast.success("Custom short URL created!");
+      seturl("");
+      setCustomUrl("");
     } catch (err) {
       if (err.response && err.response.status === 401) {
         toast.error("Unauthorized. Please login first.");
