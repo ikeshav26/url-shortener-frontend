@@ -1,7 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import AuthProvider, {useAuth}  from '../context/AuthProvider'
 
 const Navbar = () => {
+  const {authuser, setauthuser} = useAuth();
+
+  const logoutHandler = (e) => {
+    localStorage.removeItem('user');
+    setauthuser(null); // Clear auth state
+
+  }
+
   return (
     <div>
       <nav className="bg-blue-600 px-6 py-4 shadow flex items-center justify-between">
@@ -16,11 +25,26 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/login"
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-medium"
+            to="/customUrl"
+            className="text-white hover:text-blue-200 font-medium transition"
           >
-            Login
+            CustomUrl
           </Link>
+          {authuser ? (
+            <button
+              onClick={logoutHandler}
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-medium"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-medium"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </nav>
     </div>
