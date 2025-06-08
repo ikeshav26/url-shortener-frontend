@@ -8,6 +8,7 @@ const CustomUrl = () => {
   const [customUrl, setCustomUrl] = useState("");
   const [shortened, setShortened] = useState("");
 
+  const baseUrl=import.meta.env.VITE_BASE_URL;
   const submitHandler = async (e) => {
     e.preventDefault();
     const form = {
@@ -18,7 +19,7 @@ const CustomUrl = () => {
     try {
       // Make sure you are logged in and your backend CORS is set up for credentials!
       const res = await axios.post(
-        "http://localhost:5001/api/create/custom",
+        `${baseUrl}/create/custom`,
         form,
         { withCredentials: true }
       );

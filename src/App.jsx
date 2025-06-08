@@ -10,17 +10,17 @@ import AuthProvider, { useAuth } from './context/AuthProvider'
 import AllUrls from './pages/AllUrls'
 
 const App = () => {
-  const {authuser, setauthuser} = useAuth();
+  const { authuser, setauthuser } = useAuth();
   return (
     <div className='font-extrabold'>
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/allUrls' element={<AllUrls />} />
-        <Route path='/customUrl' element={authuser? <CustomUrl/>:<Navigate to="/"/>}/>
+        <Route path='/allUrls' element={authuser ? <AllUrls /> : <Navigate to="/" />} />
+        <Route path='/customUrl' element={authuser ? <CustomUrl /> : <Navigate to="/" />} />
       </Routes>
-      <Toaster/>
+      <Toaster />
     </div>
   )
 }

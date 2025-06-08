@@ -8,6 +8,7 @@ const AllUrls = () => {
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState('');
 
+  const baseUrl=import.meta.env.VITE_BASE_URL;
   useEffect(() => {
     // Get user email from localStorage (if stored there after login)
     const user = JSON.parse(localStorage.getItem('user'));
@@ -17,7 +18,7 @@ const AllUrls = () => {
 
     const fetchUrls = async () => {
       try {
-        const res = await axios.get('http://localhost:5001/api/create/all', { withCredentials: true });
+        const res = await axios.get(`${baseUrl}/create/all`, { withCredentials: true });
         setUrls(res.data);
       } catch (err) {
         toast.error('Failed to fetch URLs');

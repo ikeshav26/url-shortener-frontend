@@ -9,6 +9,7 @@ const Loginpage = () => {
   const [password, setpassword] = useState("");
   const {authuser, setauthuser} = useAuth()// Assuming you have a context or state management for auth
 
+  const baseUrl=import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -18,7 +19,7 @@ const Loginpage = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5001/api/auth/login", form,{withCredentials:true})
+      const res = await axios.post(`${baseUrl}/auth/login`, form,{withCredentials:true})
       if (res.status === 200) {
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setauthuser(res.data.user)

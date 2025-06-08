@@ -11,6 +11,7 @@ const RegisterPage = () => {
     const { authuser, setauthuser } = useAuth();
 
     const navigate = useNavigate();
+    const baseUrl=import.meta.env.VITE_BASE_URL;
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -25,7 +26,7 @@ const RegisterPage = () => {
                 toast.error("Please fill all fields");
             }
             else {
-                const res = await axios.post("http://localhost:5001/api/auth/register", form,{withCredentials:true});
+                const res = await axios.post(`${baseUrl}/auth/register`, form,{withCredentials:true});
                 localStorage.setItem("user", JSON.stringify(res.data.user));
                 setauthuser(res.data.user)
                 toast.success("Registration successful");

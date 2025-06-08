@@ -10,6 +10,7 @@ const Urlform = () => {
     const [error, seterror] = useState("")
 
 
+    const baseUrl=import.meta.env.VITE_BASE_URL;
     const submitHandler = async (e) => {
         e.preventDefault();
         if (!url) {
@@ -18,7 +19,7 @@ const Urlform = () => {
             return;
         }
         try {
-            const data = await axios.post("http://localhost:5001/api/create", { url })
+            const data = await axios.post(`${baseUrl}/create`, { url })
             setshortUrl(data.data);
             toast.success("Short URL created successfully!");
         } catch (err) {
