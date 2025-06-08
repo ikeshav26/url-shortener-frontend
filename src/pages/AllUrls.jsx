@@ -62,7 +62,7 @@ const AllUrls = () => {
                       rel="noopener noreferrer"
                       className="text-blue-600 underline break-all"
                     >
-                      http://localhost:5001/api/{url.short_url}
+                      https://url-shortener-backend-95tw.onrender.com/api/{url.short_url}
                     </a>
                   </td>
                   <td className="px-4 py-2 break-all">{url.full_url}</td>
